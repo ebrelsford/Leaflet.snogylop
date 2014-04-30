@@ -23,15 +23,15 @@
 
                 L.Polyline.prototype.initialize.call(this, latlngs, options);
                 this._initWithHoles(latlngs);
-			},
+            },
 
         });
 
         L.extend(L.MultiPolygon.prototype, {
 
-			initialize: function (latlngs, options) {
-				this._layers = {};
-				this._options = options;
+            initialize: function (latlngs, options) {
+                this._layers = {};
+                this._options = options;
 
                 if (options.invert) {
                     // Let Polygon know we're part of a MultiPolygon
@@ -47,8 +47,8 @@
                     latlngs = [newLatlngs];
                 }
 
-				this.setLatLngs(latlngs);
-			},
+                this.setLatLngs(latlngs);
+            },
 
         });
 
