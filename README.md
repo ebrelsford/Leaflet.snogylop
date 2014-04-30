@@ -54,5 +54,5 @@ License.
 
 
  [Leaflet]: https://github.com/Leaflet/Leaflet
- [polygon]: http://ebrelsford.github.io/Leaflet.snogylop/polygon.html
- [multipolygon]: http://ebrelsford.github.io/Leaflet.snogylop/multipolygon.html
+ [polygon]: http://ebrelsford.github.io/Leaflet.snogylop/examples/polygon.html
+ [multipolygon]: http://ebrelsford.github.io/Leaflet.snogylop/examples/multipolygon.html
