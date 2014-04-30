@@ -1,0 +1,26 @@
+{
+  "name": "leaflet.snogylop",
+  "version": "0.1.0",
+  "homepage": "https://github.com/ebrelsford/leaflet.snogylop",
+  "authors": [
+    "Eric Brelsford <ebrelsford@gmail.com>"
+  ],
+  "description": "Inverted polygons for Leaflet",
+  "main": "src/leaflet.snogylop.js",
+  "keywords": [
+    "leaflet",
+    "map",
+    "gis",
+  ],
+  "dependencies": {
+      "leaflet": ">=0.7"
+  },
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}
