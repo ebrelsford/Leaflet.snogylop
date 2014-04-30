@@ -27,6 +27,8 @@ requests in this direction are welcome.
 
 AMD compatible.
 
+Available through [bower][]: `bower install --save leaflet.snogylop`
+
 
 ### Options
 
@@ -56,3 +58,4 @@ License.
  [Leaflet]: https://github.com/Leaflet/Leaflet
  [polygon]: http://ebrelsford.github.io/Leaflet.snogylop/examples/polygon.html
  [multipolygon]: http://ebrelsford.github.io/Leaflet.snogylop/examples/multipolygon.html
+ [bower]: https://github.com/bower/bower
