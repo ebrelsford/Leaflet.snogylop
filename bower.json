@@ -10,7 +10,7 @@
   "keywords": [
     "leaflet",
     "map",
-    "gis",
+    "gis"
   ],
   "dependencies": {
       "leaflet": ">=0.7"
