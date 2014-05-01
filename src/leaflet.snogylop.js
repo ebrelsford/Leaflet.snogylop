@@ -25,6 +25,15 @@
                 this._initWithHoles(latlngs);
             },
 
+            getBounds: function () {
+                if (this.options.invert) {
+                    // Don't return the world-sized ring's bounds, that's not
+                    // helpful!
+                    return new L.LatLngBounds(this._holes);
+                }
+                return new L.LatLngBounds(this.getLatLngs());
+            },
+
         });
 
         L.extend(L.MultiPolygon.prototype, {
