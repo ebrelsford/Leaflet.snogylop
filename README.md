@@ -48,6 +48,20 @@ L.geoJson(data, {
 }).addTo(map);
 ```
 
+The default worldLatLngs can be overriden by passing the `worldLatLngs` attribute into the constructor.
+
+```javascript
+L.geoJson(data, {
+    invert: true,
+    worldLatLngs: [
+        L.latLng([90, 360]),
+        L.latLng([90, -180]),
+        L.latLng([-90, -180]),
+        L.latLng([-90, 360])
+    ]
+}).addTo(map);
+```
+
 
 ## License
 
