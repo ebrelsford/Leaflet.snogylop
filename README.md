@@ -36,6 +36,8 @@ Define the following option in the vector options when creating a layer (eg,
 an `L.GeoJSON`):
 
  - **invert**: (boolean) True to invert. False by default.
+ - **worldLatLngs**: (coordinate array) Optional, the coordinates of the outer 
+   ring of the inverted polygon that will be created.
 
 
 ### Examples
@@ -45,6 +47,20 @@ Create a GeoJSON layer, set `invert` to `true`:
 ```javascript
 L.geoJson(data, {
     invert: true
+}).addTo(map);
+```
+
+The default worldLatLngs can be overriden by using the `worldLatLngs` option:
+
+```javascript
+L.geoJson(data, {
+    invert: true,
+    worldLatLngs: [
+        L.latLng([90, 360]),
+        L.latLng([90, -180]),
+        L.latLng([-90, -180]),
+        L.latLng([-90, 360])
+    ]
 }).addTo(map);
 ```
 
