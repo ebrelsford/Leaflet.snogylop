@@ -23,7 +23,7 @@ Custom [worldLatLngs][], eg for polygons near the antimeridian.
 Include `leaflet.snogylop.js` on your page, set the options on your GeoJSON 
 layer as specified below.
 
-Leaflet.snogylop is only tested on Leaflet version 0.7 or greater with L.GeoJSON
+Leaflet.snogylop is tested on Leaflet version 0.7 and 1.x with L.GeoJSON
 layers. It may work with older Leaflets and should work with other layers. Pull
 requests in this direction are welcome.
 
