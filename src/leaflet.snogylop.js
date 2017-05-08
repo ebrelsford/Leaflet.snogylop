@@ -9,60 +9,100 @@
             L.latLng([-90, 180])
         ];
 
-        L.extend(L.Polygon.prototype, {
+        if (L.version < '1.0.0') {
+            L.extend(L.Polygon.prototype, {
 
-            initialize: function (latlngs, options) {
-                worldLatlngs = (options.worldLatLngs ? options.worldLatLngs : worldLatlngs);
+                initialize: function (latlngs, options) {
+                    worldLatlngs = (options.worldLatLngs ? options.worldLatLngs : worldLatlngs);
 
-                if (options && options.invert && !options.invertMultiPolygon) {
-                    // Create a new set of latlngs, adding our world-sized ring
-                    // first
-                    var newLatlngs = [];
-                    newLatlngs.push(worldLatlngs);
-                    newLatlngs.push(latlngs[0]);
-                    latlngs = newLatlngs;
-                }
-
-                L.Polyline.prototype.initialize.call(this, latlngs, options);
-                this._initWithHoles(latlngs);
-            },
-
-            getBounds: function () {
-                if (this.options.invert) {
-                    // Don't return the world-sized ring's bounds, that's not
-                    // helpful!
-                    return new L.LatLngBounds(this._holes);
-                }
-                return new L.LatLngBounds(this.getLatLngs());
-            },
-
-        });
-
-        L.extend(L.MultiPolygon.prototype, {
-
-            initialize: function (latlngs, options) {
-                worldLatlngs = (options.worldLatLngs ? options.worldLatLngs : worldLatlngs);
-                this._layers = {};
-                this._options = options;
-
-                if (options.invert) {
-                    // Let Polygon know we're part of a MultiPolygon
-                    options.invertMultiPolygon = true;
-
-                    // Create a new set of latlngs, adding our world-sized ring
-                    // first
-                    var newLatlngs = [];
-                    newLatlngs.push(worldLatlngs);
-                    for (var l in latlngs) {
-                        newLatlngs.push(latlngs[l][0]);
+                    if (options && options.invert && !options.invertMultiPolygon) {
+                        // Create a new set of latlngs, adding our world-sized ring
+                        // first
+                        var newLatlngs = [];
+                        newLatlngs.push(worldLatlngs);
+                        newLatlngs.push(latlngs[0]);
+                        latlngs = newLatlngs;
                     }
-                    latlngs = [newLatlngs];
+
+                    L.Polyline.prototype.initialize.call(this, latlngs, options);
+                    this._initWithHoles(latlngs);
+                },
+
+                getBounds: function () {
+                    if (this.options.invert) {
+                        // Don't return the world-sized ring's bounds, that's not
+                        // helpful!
+                        return new L.LatLngBounds(this._holes);
+                    }
+                    return new L.LatLngBounds(this.getLatLngs());
                 }
 
-                this.setLatLngs(latlngs);
-            },
+            });
 
-        });
+            L.extend(L.MultiPolygon.prototype, {
+                initialize: function (latlngs, options) {
+                    worldLatlngs = (options.worldLatLngs ? options.worldLatLngs : worldLatlngs);
+                    this._layers = {};
+                    this._options = options;
+
+                    if (options.invert) {
+                        // Let Polygon know we're part of a MultiPolygon
+                        options.invertMultiPolygon = true;
+
+                        // Create a new set of latlngs, adding our world-sized ring
+                        // first
+                        var newLatlngs = [];
+                        newLatlngs.push(worldLatlngs);
+                        for (var l in latlngs) {
+                            newLatlngs.push(latlngs[l][0]);
+                        }
+                        latlngs = [newLatlngs];
+                    }
+
+                    this.setLatLngs(latlngs);
+                }
+            });
+        }
+        else {
+            L.extend(L.Polygon.prototype, {
+                initialize: function (latlngs, options) {
+                    worldLatlngs = (options.worldLatLngs ? options.worldLatLngs : worldLatlngs);
+                    this._layers = {};
+                    this._options = options;
+                    this._originalLatLngs = latlngs;
+
+                    if (options.invert) {
+                        // Create a new set of latlngs, adding our world-sized ring
+                        // first
+                        var newLatlngs = [];
+                        newLatlngs.push(worldLatlngs);
+
+                        if (latlngs[0][0] instanceof L.LatLng) {
+                            // If a simple polygon, just add that as a ring
+                            newLatlngs.push(latlngs[0]);
+                        }
+                        else {
+                            // Else, add each ring from the multipolygon
+                            for (var l in latlngs) {
+                                newLatlngs.push(latlngs[l][0]);
+                            }
+                        }
+                        latlngs = [newLatlngs];
+                    }
+
+                    this.setLatLngs(latlngs);
+                },
+
+                getBounds: function () {
+                    if (this._originalLatLngs) {
+                        // Don't return the world-sized ring's bounds, that's not
+                        // helpful!
+                        return new L.LatLngBounds(this._originalLatLngs);
+                    }
+                    return new L.LatLngBounds(this.getLatLngs());
+                }
+            });
+        }
 
     }
 
