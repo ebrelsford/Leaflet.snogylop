@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+
+        <script src="//code.jquery.com/jquery-2.1.0.min.js"></script>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.0.3/leaflet.css" />
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.0.3/leaflet.js"></script>
+
+        <!-- Load leaflet.snogylop -->
+        <script src="../../src/leaflet.snogylop.js"></script>
+
+        <style>
+            html, body {
+                height: 100%;
+                margin: 0;
+                padding: 0;
+                width: 100%;
+            }
+            #map {
+                height: 100%;
+                width: 100%;
+            }
+        </style>
+
+        <script>
+            var map;
+
+            $(document).ready(function () {
+                map = L.map('map').setView([40.70, -73.96], 11);
+
+                L.tileLayer('https://{s}.tiles.mapbox.com/v3/ebrelsford.ho06j5h0/{z}/{x}/{y}.png', {
+                    maxZoom: 18,
+                    attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery &copy; <a href="http://mapbox.com">Mapbox</a>'
+                }).addTo(map);
+
+                $.getJSON('../multipolygon_hole.geojson', function (data) {
+                    var geojson = L.geoJson(data, {
+                        // Add invert: true to invert the geometries in the GeoJSON file
+                        invert: true
+                    }).addTo(map);
+
+                    map.fitBounds(geojson.getBounds());
+                });
+            });
+        </script>
+    </head>
+    <body>
+        <div id="map"></div>
+    </body>
+</html>

@@ -77,15 +77,8 @@
                         var newLatlngs = [];
                         newLatlngs.push(worldLatlngs);
 
-                        if (latlngs[0][0] instanceof L.LatLng) {
-                            // If a simple polygon, just add that as a ring
-                            newLatlngs.push(latlngs[0]);
-                        }
-                        else {
-                            // Else, add each ring from the multipolygon
-                            for (var l in latlngs) {
-                                newLatlngs.push(latlngs[l][0]);
-                            }
+                        for (var l in latlngs) {
+                            newLatlngs.push(latlngs[l]);
                         }
                         latlngs = [newLatlngs];
                     }
