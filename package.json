@@ -1,6 +1,6 @@
 {
   "name": "leaflet.snogylop",
-  "version": "0.3.2",
+  "version": "0.3.3",
   "description": "Inverted polygons for Leaflet",
   "devDependencies": {
     "leaflet": ">=0.7"
