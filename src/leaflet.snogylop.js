@@ -67,9 +67,9 @@
             L.extend(L.Polygon.prototype, {
 
                 _setLatLngs: function(latlngs) {
+                    this._originalLatLngs = latlngs;
                     if (this.options.invert) {
                         worldLatlngs = (this.options.worldLatLngs ? this.options.worldLatLngs : worldLatlngs);
-                        this._originalLatLngs = latlngs;
                         // Create a new set of latlngs, adding our world-sized ring
                         // first
                         var newLatlngs = [];
