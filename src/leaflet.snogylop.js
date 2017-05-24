@@ -65,13 +65,15 @@
         }
         else {
             L.extend(L.Polygon.prototype, {
-                initialize: function (latlngs, options) {
-                    worldLatlngs = (options.worldLatLngs ? options.worldLatLngs : worldLatlngs);
-                    this._layers = {};
-                    L.Util.setOptions(this, options);
+                _setLatLngs: function(latlngs) {
                     this._originalLatLngs = latlngs;
-
-                    if (options.invert) {
+                    if (L.Polyline._flat(this._originalLatLngs)) {
+                        this._originalLatLngs = [this._originalLatLngs];
+                    }
+                    if (this.options.invert) {
+                        worldLatlngs = (this.options.worldLatLngs ?
+                            this.options.worldLatLngs :
+                            worldLatlngs);
                         // Create a new set of latlngs, adding our world-sized ring
                         // first
                         var newLatlngs = [];
@@ -82,17 +84,15 @@
                         }
                         latlngs = [newLatlngs];
                     }
+                    L.Polyline.prototype._setLatLngs.call(this, latlngs);
 
-                    this.setLatLngs(latlngs);
+                    // Set bounds to bounds of original latlngs, not including
+                    // the ring
+                    this._bounds = L.latLngBounds(this._originalLatLngs);
                 },
 
-                getBounds: function () {
-                    if (this._originalLatLngs) {
-                        // Don't return the world-sized ring's bounds, that's not
-                        // helpful!
-                        return new L.LatLngBounds(this._originalLatLngs);
-                    }
-                    return new L.LatLngBounds(this.getLatLngs());
+                getLatLngs: function() {
+                    return this._originalLatLngs;
                 }
             });
         }
