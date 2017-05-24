@@ -65,13 +65,11 @@
         }
         else {
             L.extend(L.Polygon.prototype, {
-                initialize: function (latlngs, options) {
-                    worldLatlngs = (options.worldLatLngs ? options.worldLatLngs : worldLatlngs);
-                    this._layers = {};
-                    L.Util.setOptions(this, options);
-                    this._originalLatLngs = latlngs;
 
-                    if (options.invert) {
+                _setLatLngs: function(latlngs) {
+                    if (this.options.invert) {
+                        worldLatlngs = (this.options.worldLatLngs ? this.options.worldLatLngs : worldLatlngs);
+                        this._originalLatLngs = latlngs;
                         // Create a new set of latlngs, adding our world-sized ring
                         // first
                         var newLatlngs = [];
@@ -82,8 +80,18 @@
                         }
                         latlngs = [newLatlngs];
                     }
+                    L.Polyline.prototype._setLatLngs.call(this, latlngs);
+                    if(L.Polyline._flat(this._latlngs)) {
+                        this._latlngs = [this._latlngs];
+                    }
+                },
 
-                    this.setLatLngs(latlngs);
+                getLatLngs: function() {
+                    if (this._originalLatLngs) {
+                        // Don't return the world-sized ring, that's not helpful!
+                        return this._originalLatLngs;
+                    }
+                    return L.Polyline.prototype.getLatLngs.call(this);
                 },
 
                 getBounds: function () {
