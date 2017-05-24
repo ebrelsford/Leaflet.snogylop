@@ -92,11 +92,7 @@
                 },
 
                 getLatLngs: function() {
-                    if (this._originalLatLngs) {
-                        // Don't return the world-sized ring, that's not helpful!
-                        return this._originalLatLngs;
-                    }
-                    return L.Polyline.prototype.getLatLngs.call(this);
+                    return this._originalLatLngs;
                 }
             });
         }
