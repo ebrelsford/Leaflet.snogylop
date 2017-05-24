@@ -68,7 +68,7 @@
                 initialize: function (latlngs, options) {
                     worldLatlngs = (options.worldLatLngs ? options.worldLatLngs : worldLatlngs);
                     this._layers = {};
-                    this._options = options;
+                    L.Util.setOptions(this, options);
                     this._originalLatLngs = latlngs;
 
                     if (options.invert) {
