@@ -68,6 +68,9 @@
 
                 _setLatLngs: function(latlngs) {
                     this._originalLatLngs = latlngs;
+                    if(L.Polyline._flat(this._originalLatLngs)) {
+                        this._originalLatLngs = [this._originalLatLngs];
+                    }
                     if (this.options.invert) {
                         worldLatlngs = (this.options.worldLatLngs ? this.options.worldLatLngs : worldLatlngs);
                         // Create a new set of latlngs, adding our world-sized ring
