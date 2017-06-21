@@ -85,10 +85,15 @@
                         latlngs = [newLatlngs];
                     }
                     L.Polyline.prototype._setLatLngs.call(this, latlngs);
+                },
 
-                    // Set bounds to bounds of original latlngs, not including
-                    // the ring
-                    this._bounds = L.latLngBounds(this._originalLatLngs);
+                getBounds: function () {
+                    if (this._originalLatLngs) {
+                        // Don't return the world-sized ring's bounds, that's not
+                        // helpful!
+                        return new L.LatLngBounds(this._originalLatLngs);
+                    }
+                    return new L.LatLngBounds(this.getLatLngs());
                 },
 
                 getLatLngs: function() {
