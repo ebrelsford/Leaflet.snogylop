@@ -98,6 +98,22 @@
 
                 getLatLngs: function() {
                     return this._originalLatLngs;
+                },
+
+                toGeoJSON: function (precision) {
+                    var holes = !L.Polyline._flat(this._originalLatLngs),
+                        multi = holes && !L.Polyline._flat(this._originalLatLngs[0]);
+
+                    var coords = L.GeoJSON.latLngsToCoords(this._originalLatLngs, multi ? 2 : holes ? 1 : 0, true, precision);
+
+                    if (!holes) {
+                        coords = [coords];
+                    }
+
+                    return L.GeoJSON.getFeature(this, {
+                        type: (multi ? 'Multi' : '') + 'Polygon',
+                        coordinates: coords
+                    });
                 }
             });
         }
