@@ -66,6 +66,10 @@
             });
         }
         else {
+            var OriginalPolygon = {
+                toGeoJSON: L.Polygon.prototype.toGeoJSON
+            };
+
             L.extend(L.Polygon.prototype, {
                 _setLatLngs: function(latlngs) {
                     this._originalLatLngs = latlngs;
@@ -103,6 +107,8 @@
                 },
 
                 toGeoJSON: function (precision) {
+                    if (!this.options.invert) return OriginalPolygon.toGeoJSON.call(this, precision);
+
                     var holes = !isFlat(this._originalLatLngs),
                         multi = holes && !isFlat(this._originalLatLngs[0]);
 
