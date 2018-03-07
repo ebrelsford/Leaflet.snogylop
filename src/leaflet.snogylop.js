@@ -1,4 +1,6 @@
 (function () {
+    // Use public isFlat if available, else fall back to private _flat
+    var isFlat = L.LineUtil.isFlat ? L.LineUtil.isFlat : L.LineUtil._flat;
 
     function defineSnogylop(L) {
 
@@ -67,7 +69,7 @@
             L.extend(L.Polygon.prototype, {
                 _setLatLngs: function(latlngs) {
                     this._originalLatLngs = latlngs;
-                    if (L.LineUtil.isFlat(this._originalLatLngs)) {
+                    if (isFlat(this._originalLatLngs)) {
                         this._originalLatLngs = [this._originalLatLngs];
                     }
                     if (this.options.invert) {
@@ -101,8 +103,8 @@
                 },
 
                 toGeoJSON: function (precision) {
-                    var holes = !L.LineUtil.isFlat(this._originalLatLngs),
-                        multi = holes && !L.LineUtil.isFlat(this._originalLatLngs[0]);
+                    var holes = !isFlat(this._originalLatLngs),
+                        multi = holes && !isFlat(this._originalLatLngs[0]);
 
                     var coords = L.GeoJSON.latLngsToCoords(this._originalLatLngs, multi ? 2 : holes ? 1 : 0, true, precision);
 
