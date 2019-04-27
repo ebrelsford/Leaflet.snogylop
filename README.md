@@ -66,6 +66,18 @@ L.geoJson(data, {
 }).addTo(map);
 ```
 
+### FAQs
+
+**Is there any way to avoid the delay in drawing the polygon when panning and zooming?**
+
+Yes, with Leaflet 1.* you can use the `renderer` option as described in [this issue](https://github.com/ebrelsford/Leaflet.snogylop/issues/1#issuecomment-487265696) to add padding around the polygon. For example:
+
+```javascript
+L.geoJson(data, {
+    invert: true,
+    renderer: L.svg({ padding: 1 })
+}).addTo(map);
+```
 
 ## License
 
